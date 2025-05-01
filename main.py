@@ -14,7 +14,8 @@ def shortest_shortest_path(graph, source):
     """
     ### TODO
 
-    heap = [(0, 0, source)]
+    heap = []  # Initialize empty heap
+    heappush(heap, (0, 0, source))  # Add initial node with proper typing
     best = {} 
   
     while heap:
@@ -24,7 +25,9 @@ def shortest_shortest_path(graph, source):
         best[u] = (dist, edges)
         for v, w in graph.get(u, set()):
             if v not in best:
-                heappush(heap, (dist + int(w), edges + 1, v))
+                # Ensure all numbers are proper integers
+                new_dist = dist + (int(w) if isinstance(w, str) else w)
+                heappush(heap, (new_dist, edges + 1, v))
     return best
     #pass
     
