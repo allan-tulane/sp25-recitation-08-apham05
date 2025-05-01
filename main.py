@@ -13,7 +13,20 @@ def shortest_shortest_path(graph, source):
       (shortest path weight, shortest path number of edges). See test case for example.
     """
     ### TODO
-    pass
+
+    heap = [(0, 0, source)]
+    best = {} 
+  
+    while heap:
+        dist, edges, u = heappop(heap)
+        if u in best:
+            continue
+        best[u] = (dist, edges)
+        for v, w in graph.get(u, set()):
+            if v not in best:
+                heappush(heap, (dist + int(w), edges + 1, v))
+    return best
+    #pass
     
 
     
