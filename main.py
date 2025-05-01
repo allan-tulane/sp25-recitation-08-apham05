@@ -14,8 +14,8 @@ def shortest_shortest_path(graph, source):
     """
     ### TODO
 
-    heap = []  # Initialize empty heap
-    heappush(heap, (0, 0, source))  # Add initial node with proper typing
+    heap = []  
+    heappush(heap, (0, 0, source))  
     best = {} 
   
     while heap:
@@ -25,7 +25,6 @@ def shortest_shortest_path(graph, source):
         best[u] = (dist, edges)
         for v, w in graph.get(u, set()):
             if v not in best:
-                # Ensure all numbers are proper integers
                 new_dist = dist + (int(w) if isinstance(w, str) else w)
                 heappush(heap, (new_dist, edges + 1, v))
     return best
@@ -41,6 +40,20 @@ def bfs_path(graph, source):
       that vertex in the shortest path tree.
     """
     ###TODO
+    parents = {source: None}
+    visited = {source}
+    queue = deque([source])
+
+    while queue:
+        u = queue.popleft()
+        for v in graph.get(u, set()):
+            if v not in visited:
+                visited.add(v)
+                parents[v] = u
+                queue.append(v)
+    return parents
+
+
     pass
 
 def get_sample_graph():
@@ -60,5 +73,10 @@ def get_path(parents, destination):
       (excluding the destination node itself). See test_get_path for an example.
     """
     ###TODO
+    path = []
+    while destination in parents and parents[destination] is not None:
+        path.append(parents[destination])
+        destination = parents[destination]
+    return ''.join(path[::-1])
     pass
 
